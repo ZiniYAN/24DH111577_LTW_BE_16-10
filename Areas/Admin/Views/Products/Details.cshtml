@@ -1,0 +1,16 @@
+﻿@model _24DH111577_LTW_BE_16_10.Models.Product
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2 class="bg-success">Chi tiết sản phẩm</h2>
+
+@Html.Partial("PVProductInfo",Model)
+<div class="form-group">
+    <div class="col-md-offset-3 col-md-9">
+        @Html.ActionLink("Sửa", "Edit", new { id = Model.ProductID }, new {@class="btn btn-primary"}) |
+        @Html.ActionLink("Quay lại danh sách", "Index", new { @class = "btn btn-primary" })
+    </div>
+</div>

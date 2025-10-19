@@ -1,0 +1,22 @@
+﻿@model _24DH111577_LTW_BE_16_10.Models.Product
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2 class="bg-success">Xóa</h2>
+
+<h3>Bạn chắc chắn xóa?</h3>
+@Html.Partial("PVProductInfo", Model)
+
+@using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Xóa" class="btn btn-default" /> |
+            @Html.ActionLink("Quay lại danh sách", "Index", null,new { @class = "btn btn-primary" })
+        </div>
+    }
+
