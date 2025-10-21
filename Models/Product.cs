@@ -14,7 +14,7 @@ namespace _24DH111577_LTW_BE_16_10.Models
     using System.ComponentModel.DataAnnotations.Schema;
     using System.ComponentModel.DataAnnotations;
     using System.Web;
-
+    
 
     public partial class Product
     {
@@ -37,7 +37,7 @@ namespace _24DH111577_LTW_BE_16_10.Models
         public virtual ICollection<OrderDetail> OrderDetails { get; set; }
 
         [RegularExpression(@"[a-zA-Z0-9\s_\\.\-:])+(.png|.jpg|.gif|.PNG|.JPG|.GIF)$",
-ErrorMessage = "[translate:Chi chap nhan: PNG, JPG và GIF]")]
+ErrorMessage = "[translate:Chi chap nhan: PNG, JPG v� GIF]")]
         [NotMapped]
         public HttpPostedFile UploadImg { get; set; }
     }
