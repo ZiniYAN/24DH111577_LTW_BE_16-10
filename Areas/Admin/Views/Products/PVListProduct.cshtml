@@ -1,0 +1,57 @@
+﻿@model _24DH111577_LTW_BE_16_10.Models.ViewModel.ProductSearchVM
+@using PagedList.Mvc
+<head>
+    <style>
+        img{
+            height: 150px;
+            max-width:150px;
+        }
+    </style>
+</head>
+
+@if (Model.Products != null && Model.Products.Any())
+{
+
+
+<h2 class="bg-success">Danh sách sản phẩm</h2>
+    <table class="table bg-info container-fluid">
+        <tr>
+            <th class="bg-success col-md-2">Hình ảnh</th>
+            <th class="bg-success col-md-3">Tên sản phẩm</th>
+            <th class="bg-success col-md-1">Đơn giá</th>
+            <th class="bg-success col-md-2">Danh mục</th>
+            <th class="bg-success col-md-4"></th>
+        </tr>
+
+    @foreach (var item in Model.Products)
+    {
+        <tr>
+            <td><img src="@Html.DisplayFor(modelItem => item.ProductImage)"/></td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProductName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProductPrice)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Category.CategoryName)
+            </td>
+            <td>
+                @Html.ActionLink("Sửa", "Edit", new { id = item.ProductID }, new { @class = "btn btn-primary btn-sm" }) |
+                @Html.ActionLink("Chi tiết", "Details", new { id = item.ProductID }, new { @class = "btn btn-primary btn-sm" }) |
+                @Html.ActionLink("Xóa", "Delete", new { id = item.ProductID }, new { @class = "btn btn-primary btn-sm" })
+            </td>
+        </tr>
+    }
+
+    </table>
+}
+else
+            {
+                <p style="color:red;">Không tìm thấy sản phẩm phù hợp</p>
+            }
+    <div class="form-group">
+        <div class="col-md-offset-8 col-md-4">
+                @Html.ActionLink("Thêm mới", "Create",null, new { @class= "btn-primary"})
+        </div>
+    </div>

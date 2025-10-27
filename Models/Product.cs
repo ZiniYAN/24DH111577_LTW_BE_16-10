@@ -36,8 +36,8 @@ namespace _24DH111577_LTW_BE_16_10.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<OrderDetail> OrderDetails { get; set; }
 
-        [RegularExpression(@"[a-zA-Z0-9\s_\\.\-:])+(.png|.jpg|.gif|.PNG|.JPG|.GIF)$",
-ErrorMessage = "[translate:Chi chap nhan: PNG, JPG v� GIF]")]
+        [RegularExpression(@"[a-zA-Z0-9\s_\\.\-:]+(.png|.jpg|.gif|.PNG|.JPG|.GIF)$",
+ErrorMessage = "[translate:Chi chap nhan: PNG, JPG va GIF]")]
         [NotMapped]
         public HttpPostedFile UploadImg { get; set; }
     }
