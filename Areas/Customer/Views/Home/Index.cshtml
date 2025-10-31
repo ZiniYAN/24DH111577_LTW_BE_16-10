@@ -1,0 +1,32 @@
+﻿@model _24DH111577_LTW_BE_16_10.Models.ViewModel.HomeProductVM
+@{
+    ViewBag.Title = "Customer HomePage";
+    <link rel="stylesheet" type="text/css" href="~/Content/CustomerHome.css" />
+}
+
+<section class="container-fluid banner">
+    <div class="banner-container">
+        <h2>Chào mừng bạn đến với web E-Commerce</h2>
+        <p>Mua sắm trực tuyến với hàng ngàn sản phẩm chất lượng</p>
+        <a href="#" class="btnBanner">Bắt đầu mua sắm</a>
+    </div>
+</section>
+
+@*Tim kiem san pham*@
+<section class="container-fluid searchProd">
+    <h2>Tìm kiếm sản phẩm</h2>
+    @using (Html.BeginForm("Index", "Home", FormMethod.Get))
+            {
+                <div class="form-group search-container">
+                    @Html.TextBoxFor(m => m.SearchTerm, new
+               {
+                   @class= "search-input",
+                   placeholder = "Nhập tên, mô tả hoặc loại sản phẩm"
+               })
+                    <button type="submit" class="search-button">Tìm kiếm</button>
+                </div>
+            }
+</section>
+<hr/>
+@Html.Partial("PVFeatureProduct",Model)
+@Html.Partial("PVNewProduct",Model)

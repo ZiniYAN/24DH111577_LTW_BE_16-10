@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using _24DH111577_LTW_BE_16_10.Models;
+using _24DH111577_LTW_BE_16_10.Models.ViewModel;
+using PagedList;
 
 namespace _24DH111577_LTW_BE_16_10.Controllers
 {
