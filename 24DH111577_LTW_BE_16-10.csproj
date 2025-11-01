@@ -165,6 +165,7 @@
     <Compile Include="Areas\Admin\Controllers\CategoriesController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Areas\Admin\Controllers\ProductsController.cs" />
+    <Compile Include="Areas\Customer\Controllers\CartController.cs" />
     <Compile Include="Areas\Customer\Controllers\HomeController.cs" />
     <Compile Include="Areas\Customer\CustomerAreaRegistration.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -209,6 +210,9 @@
     <Compile Include="Models\User.cs">
       <DependentUpon>MyStoreModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ViewModel\Cart.cs" />
+    <Compile Include="Models\ViewModel\CartItem.cs" />
+    <Compile Include="Models\ViewModel\CartService.cs" />
     <Compile Include="Models\ViewModel\HomeProductVM.cs" />
     <Compile Include="Models\ViewModel\ProductDetailVM.cs" />
     <Compile Include="Models\ViewModel\ProductSearchVM.cs" />
@@ -294,6 +298,7 @@
     <Content Include="Areas\Customer\Views\Home\ProductDetails.cshtml" />
     <Content Include="Areas\Customer\Views\Home\PVRelatedProduct.cshtml" />
     <Content Include="Areas\Customer\Views\Home\PVTopProduct.cshtml" />
+    <Content Include="Areas\Customer\Views\Cart\Index.cshtml" />
     <None Include="Scripts\jquery-3.7.0.intellisense.js" />
     <Content Include="Scripts\jquery-3.7.0.js" />
     <Content Include="Scripts\jquery-3.7.0.min.js" />
