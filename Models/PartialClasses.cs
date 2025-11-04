@@ -9,13 +9,13 @@ using _24DH111577_LTW_BE_16_10.Models.ViewModel;
 namespace _24DH111577_LTW_BE_16_10.Models
 {
     
-        [MetadataType(typeof(UserMetadata))]
-        public partial class User
-        {
-            [NotMapped]
-            [Compare("Password")]
-            public string ConfirmedPassword {get; set;}
-        }
+        //[MetadataType(typeof(UserMetadata))]
+        //public partial class User
+        //{
+        //    [NotMapped]
+        //    [Compare("Password")]
+        //    public string ConfirmedPassword {get; set;}
+        //}
     [MetadataType(typeof(ProductMetadata))]
     public partial class Product
     {

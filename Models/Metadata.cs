@@ -8,31 +8,31 @@ using System.Web.Mvc;
 
 namespace _24DH111577_LTW_BE_16_10.Models
 {
-    public class UserMetadata
-    {
-        [Required(ErrorMessage ="Username not null")]
-        [StringLength(30,MinimumLength =5)]
-        [RegularExpression("\r\n ^[a-zA-Z0-9](?!.*[._]{2})[a-zA-Z0-9._]{6,20}[a-zA-Z0-9]$ ")]
-        public string Username { get; set; }
-        [Required]
-        [DataType(DataType.Password)]
-        public string Password { get; set; }
-        [Required]
-        public string UserRole { get; set; }
-    }
+//    public class UserMetadata
+//    {
+//        [Required(ErrorMessage ="Username not null")]
+//        [StringLength(30,MinimumLength =5)]
+//        [RegularExpression("\r\n ^[a-zA-Z0-9](?!.*[._]{2})[a-zA-Z0-9._]{6,20}[a-zA-Z0-9]$ ")]
+//        public string Username { get; set; }
+//        [Required]
+//        [DataType(DataType.Password)]
+//        public string Password { get; set; }
+//        [Required]
+//        public string UserRole { get; set; }
+//    }
 
-    public class CategoryMetadata
-    {
-        [HiddenInput]
-        public int CategoryID { get; set; }
-        [Required]
-        [StringLength(50,MinimumLength = 5)]
-        public string CategoryName { get; set; }
-    }
-    public class CustomerMetadata { }
-    public class MyStoreModelMetadata { }
-    public class OrderMetadata { }
-    public class OrderDetailsMetadata { }
+    //public class CategoryMetadata
+    //{
+    //    [HiddenInput]
+    //    public int CategoryID { get; set; }
+    //    [Required]
+    //    [StringLength(50,MinimumLength = 5)]
+    //    public string CategoryName { get; set; }
+    //}
+    //public class CustomerMetadata { }
+    //public class MyStoreModelMetadata { }
+    //public class OrderMetadata { }
+    //public class OrderDetailsMetadata { }
     public class ProductMetadata 
     {
         [Display(Name="Mã sản phẩm")]
@@ -47,11 +47,11 @@ namespace _24DH111577_LTW_BE_16_10.Models
         
         public int CategoryID { get; set; }
         //[Display(Name = "Link ảnh sản phẩm")]
-        //[DefaultValue(~/Content/Image)]
+        //[DefaultValue(~/Content)]
         //public string ProductImage { get; set; }
         [Display(Name = "Mô tả sản phẩm")]
-        public string NameDescription { get; set; }
-        [DefaultValue(true)]
-        public System.DateTime CreatedData { get; set; }
+        public string ProductDescription { get; set; }
+        //[DefaultValue(true)]
+        //public System.DateTime CreatedData { get; set; }
     }
 }

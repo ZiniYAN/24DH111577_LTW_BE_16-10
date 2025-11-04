@@ -4,5 +4,28 @@
     Layout = "~/Areas/Customer/Views/Shared/_CustomerLayout.cshtml";
 }
 
-<h2>ProfileInfo</h2>
+@* ProfileInfo.cshtml *@
+<div class="card mb-4">
+    <div class="card-header">
+        Thông tin cá nhân
+    </div>
+    <div class="card-body">
+        <dl class="row">
+            <dt class="col-sm-4">Họ tên:</dt>
+            <dd class="col-sm-8">@Model.CustomerName</dd>
+
+            <dt class="col-sm-4">Số điện thoại:</dt>
+            <dd class="col-sm-8">@Model.CustomerPhone</dd>
+
+            <dt class="col-sm-4">Email:</dt>
+            <dd class="col-sm-8">@Model.CustomerEmail</dd>
+
+            <dt class="col-sm-4">Địa chỉ:</dt>
+            <dd class="col-sm-8">@Model.CustomerAddress</dd>
+
+            <dt class="col-sm-4">Tên đăng nhập:</dt>
+            <dd class="col-sm-8">@Model.Username</dd>
+        </dl>
+    </div>
+</div>
 
