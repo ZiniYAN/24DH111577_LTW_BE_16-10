@@ -93,7 +93,7 @@ namespace _24DH111577_LTW_BE_16_10.Areas.Customer.Controllers
         // POST: Account/Login
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Login(LoginVM model)
+        public ActionResult Login(LoginVM model, string returnUrl)
         {
             if (ModelState.IsValid)
             {
@@ -109,6 +109,12 @@ namespace _24DH111577_LTW_BE_16_10.Areas.Customer.Controllers
                     // lưu thông tin xác thực người dùng vào cookie
                     FormsAuthentication.SetAuthCookie(user.Username, false);
 
+                    //Debug 
+                    if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
+                    {
+                        return Redirect(returnUrl);
+                    }
+
                     return RedirectToAction("Index", "Home");
                 }
                 else
@@ -122,7 +128,103 @@ namespace _24DH111577_LTW_BE_16_10.Areas.Customer.Controllers
 
         public ActionResult ProfileInfo()
         {
-            return View();
+            // Get the current logged-in user's username
+            string username = User.Identity.Name;
+
+            // Retrieve the customer information
+            var customerInfo = db.Customers.FirstOrDefault(c => c.Username == username);
+
+            if (customerInfo == null)
+            {
+                return HttpNotFound();
+            }
+
+            return View(customerInfo);
+        }
+        public ActionResult Index()
+        {
+            string username = User.Identity.Name;
+            var customer = db.Customers.FirstOrDefault(c => c.Username == username);
+            if (customer == null)
+            {
+                return HttpNotFound();
+            }
+            return View(customer);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult UpdateContact(_24DH111577_LTW_BE_16_10.Models.Customer model)
+        {
+            if (ModelState.IsValid)
+            {
+                string username = User.Identity.Name;
+                var customer = db.Customers.FirstOrDefault(c => c.Username == username);
+
+                if (customer != null)
+                {
+                    customer.CustomerPhone = model.CustomerPhone;
+                    customer.CustomerEmail = model.CustomerEmail;
+                    customer.CustomerAddress = model.CustomerAddress;
+
+                    db.SaveChanges();
+                    TempData["Message"] = "Contact information updated successfully.";
+                }
+            }
+            return RedirectToAction("Index");
+        }
+        
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult ChangePassword(string currentPassword, string newPassword, string confirmPassword)
+        {
+            string username = Session["Username"] as string;
+            var user = db.Users.SingleOrDefault(u => u.Username == username && u.UserRole == "Customer");
+
+            if (user != null)
+            {
+                // Trim both passwords and show more detailed debug info
+                string storedPass = user.Password?.Trim() ?? "";
+                string enteredPass = currentPassword?.Trim() ?? "";
+
+                // Add detailed debug information
+                //TempData["Debug"] = $@"Debug Info:
+                //Username: {username}
+                //Stored Password Length: {storedPass.Length}
+                //Entered Password Length: {enteredPass.Length}
+                //Stored Password: '{storedPass}'
+                //Entered Password: '{enteredPass}'
+                //Passwords Equal: {storedPass == enteredPass}
+                //Password Bytes Match: {Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(storedPass)) ==
+                //                     Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(enteredPass))}";
+
+                // Compare trimmed passwords
+                if (storedPass == enteredPass)
+                {
+                    if (string.IsNullOrEmpty(newPassword) || newPassword != confirmPassword)
+                    {
+                        TempData["Message"] = "New passwords don't match.";
+                        return RedirectToAction("Index");
+                    }
+
+                    user.Password = newPassword.Trim();
+                    db.SaveChanges();
+                    TempData["Message"] = "Password changed successfully.";
+                }
+                else
+                {
+                    TempData["Message"] = "Current password is incorrect.";
+                }
+            }
+
+            return RedirectToAction("Index");
+        }
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
         }
 
     }

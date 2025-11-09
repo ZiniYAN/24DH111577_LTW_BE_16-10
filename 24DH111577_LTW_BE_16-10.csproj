@@ -215,6 +215,7 @@
     <Compile Include="Models\ViewModel\Cart.cs" />
     <Compile Include="Models\ViewModel\CartItem.cs" />
     <Compile Include="Models\ViewModel\CartService.cs" />
+    <Compile Include="Models\ViewModel\CheckoutVM.cs" />
     <Compile Include="Models\ViewModel\HomeProductVM.cs" />
     <Compile Include="Models\ViewModel\LoginVM.cs" />
     <Compile Include="Models\ViewModel\ProductDetailVM.cs" />
@@ -303,9 +304,10 @@
     <Content Include="Areas\Customer\Views\Home\PVRelatedProduct.cshtml" />
     <Content Include="Areas\Customer\Views\Home\PVTopProduct.cshtml" />
     <Content Include="Areas\Customer\Views\Cart\Index.cshtml" />
-    <Content Include="Areas\Customer\Views\Home\Checkout.cshtml" />
-    <Content Include="Areas\Customer\Views\Home\OrderSuccess.cshtml" />
-    <Content Include="Areas\Customer\Views\Home\MyOrder.cshtml" />
+    <Content Include="Areas\Customer\Views\Order\Checkout.cshtml" />
+    <Content Include="Areas\Customer\Views\Order\OrderSuccess.cshtml" />
+    <Content Include="Areas\Customer\Views\Order\MyOrder.cshtml" />
+    <Content Include="Areas\Customer\Views\Home\PVOrderCard.cshtml" />
     <None Include="Scripts\jquery-3.7.0.intellisense.js" />
     <Content Include="Scripts\jquery-3.7.0.js" />
     <Content Include="Scripts\jquery-3.7.0.min.js" />
@@ -336,7 +338,6 @@
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Data\" />
     <Folder Include="Areas\Customer\Data\" />
-    <Folder Include="Areas\Customer\Views\Order\" />
     <Folder Include="Content\images\" />
     <Folder Include="Views\Account\" />
   </ItemGroup>

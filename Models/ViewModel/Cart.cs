@@ -5,6 +5,7 @@ using System.Web;
 
 namespace _24DH111577_LTW_BE_16_10.Models.ViewModel
 {
+    [Serializable]
     public class Cart
     {
         private List<CartItem> items = new List<CartItem>();

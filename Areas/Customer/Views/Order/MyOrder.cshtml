@@ -1,0 +1,130 @@
+﻿@model IEnumerable<_24DH111577_LTW_BE_16_10.Models.Order>
+@{
+    ViewBag.Title = "Đơn hàng của tôi";
+    Layout = "~/Areas/Customer/Views/Shared/_CustomerLayout.cshtml";
+}
+
+<div class="container mt-4">
+    <!-- Search Section -->
+    <div class="card mb-4">
+        <div class="card-body">
+            <h5 class="card-title">Tìm kiếm đơn hàng</h5>
+            @using (Html.BeginForm("MyOrder", "Home", FormMethod.Get))
+            {
+                <div class="row">
+                    <div class="col-md-5">
+                        <div class="form-group">
+                            <input type="text" name="orderCode" class="form-control" placeholder="Nhập mã đơn hàng..." value="@Request.QueryString["orderCode"]" />
+                        </div>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="form-group">
+                            <input type="text" name="productName" class="form-control" placeholder="Nhập tên sản phẩm..." value="@Request.QueryString["productName"]" />
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <button type="submit" class="btn btn-primary w-100">Tìm kiếm</button>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+
+    <!-- Orders Section -->
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Đơn hàng của tôi</h5>
+
+            <!-- Order Status Tabs -->
+            <ul class="nav nav-tabs" id="orderTabs" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" id="all-tab" data-toggle="tab" href="#all" role="tab">
+                        Tất cả đơn
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="pending-tab" data-toggle="tab" href="#pending" role="tab">
+                        Chờ thanh toán
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="processing-tab" data-toggle="tab" href="#processing" role="tab">
+                        Đang xử lý
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="shipping-tab" data-toggle="tab" href="#shipping" role="tab">
+                        Đang vận chuyển
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="delivered-tab" data-toggle="tab" href="#delivered" role="tab">
+                        Đã giao
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="cancelled-tab" data-toggle="tab" href="#cancelled" role="tab">
+                        Đã hủy
+                    </a>
+                </li>
+            </ul>
+
+            <!-- Tab Contents -->
+            <div class="tab-content mt-3" id="orderTabContent">
+                <!-- All Orders Tab -->
+                <div class="tab-pane fade show active" id="all" role="tabpanel">
+                    @foreach (var orderGroup in Model.GroupBy(o => o.PaymentStatus))
+                    {
+                        <div class="order-group mb-4">
+                            <h6 class="status-header">@GetStatusName(orderGroup.Key)</h6>
+                            @foreach (var order in orderGroup)
+                            {
+                                @Html.Partial("_OrderCard", order)
+                            }
+                        </div>
+                    }
+                </div>
+
+                <!-- Status-specific Tabs -->
+                @foreach (var status in new[] { "Pending", "Processing", "Shipping", "Delivered", "Cancelled" })
+                {
+                    <div class="tab-pane fade" id="@status.ToLower()" role="tabpanel">
+                        @foreach (var order in Model.Where(o => o.PaymentStatus.ToString() == status))
+                        {
+                            @Html.Partial("_OrderCard", order)
+                        }
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+@helper GetStatusName(string status)
+{
+    switch (status)
+    {
+        case "Pending":<text>Chờ thanh toán</text>; break;
+    case "Processing": <text>Đang xử lý</text>; break;
+case "Shipping": <text>Đang vận chuyển</text>; break;
+case "Delivered": <text>Đã giao</text>; break;
+case "Cancelled": <text>Đã hủy</text>; break;
+default: <text>@status</text>; break;
+}
+}
+
+@section Styles {
+    <style>
+        .status-header {
+            padding: 10px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+
+        .order-group {
+            border-bottom: 1px solid #dee2e6;
+            padding-bottom: 15px;
+        }
+    </style>
+}

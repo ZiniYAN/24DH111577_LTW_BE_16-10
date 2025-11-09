@@ -1,12 +1,13 @@
 ﻿using _24DH111577_LTW_BE_16_10.Models;
 using _24DH111577_LTW_BE_16_10.Models.ViewModel;
+using PagedList; 
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using PagedList; 
-using System.Net;
 namespace _24DH111577_LTW_BE_16_10.Areas.Customer.Controllers
 {
     public class HomeController : Controller
@@ -63,6 +64,8 @@ namespace _24DH111577_LTW_BE_16_10.Areas.Customer.Controllers
             }
             return View(model);
         }
+
+        
 
     }
 }

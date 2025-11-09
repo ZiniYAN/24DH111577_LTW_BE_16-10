@@ -18,9 +18,12 @@ namespace _24DH111577_LTW_BE_16_10.Areas.Customer.Controllers
 
 
         private MyStoreEntities db = new MyStoreEntities();
+        private CartService cartService;
         private CartService GetCartService()
         {
-            return new CartService(Session);
+            if (cartService == null)
+                cartService = new CartService(Session);
+            return cartService;
         }
 
         public ActionResult Index()
@@ -36,9 +39,17 @@ namespace _24DH111577_LTW_BE_16_10.Areas.Customer.Controllers
             if (product != null)
             {
                 var cartService = GetCartService();
-                cartService.GetCart().AddItem(product.ProductID, product.ProductImage, product.ProductName,product.ProductPrice, quantity, product.Category.CategoryName);
+                cartService.GetCart().AddItem(
+                    product.ProductID,
+                    product.ProductImage,
+                    product.ProductName,
+                    product.ProductPrice,
+                    quantity,
+                    product.Category.CategoryName);
             }
             return RedirectToAction("Index");
+
+
         }
 
         public ActionResult RemoveFromCart(int id)

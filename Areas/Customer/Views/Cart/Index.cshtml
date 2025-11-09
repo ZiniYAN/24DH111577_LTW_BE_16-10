@@ -2,7 +2,28 @@
 
 @{
     ViewBag.Title = "Index";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Areas/Customer/Views/Shared/_CustomerLayout.cshtml";
+}
+@* Hiển thị debug info *@
+@if (TempData["DebugInfo"] != null)
+{
+    <div class="alert alert-info">
+        <pre>@TempData["DebugInfo"]</pre>
+    </div>
+}
+
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-warning">
+        @TempData["Message"]
+    </div>
+}
+@if (TempData["CartDetails"] != null)
+{
+    <div class="alert alert-info">
+        <h5>Cart Details:</h5>
+        <pre>@TempData["CartDetails"]</pre>
+    </div>
 }
 
 <style>
@@ -104,11 +125,32 @@
         </div>
         <div class="col-md-3 cart-section">
             <div><strong>Tổng giá trị: &nbsp;<span style="color: red;">@Model.TotalValue().ToString("N0")</span></strong></div>
-            <div>@Html.ActionLink("Mua hàng", "Checkout", "Cart", null, new { @class = "btn btn-danger cart-button" })</div>
+            <div>@Html.ActionLink("Mua hàng", "Checkout", "Order", null, new { @class = "btn btn-danger cart-button" })</div>
         </div>
         <div class="col-md-12">
             @Html.ActionLink("Tiếp tục mua hàng", "Index", "Home", null, new { @class = "btn btn-warning cart-button" })
         </div>
+
+
+        @* Nút checkout - đảm bảo area được set đúng *@
+        <div class="text-right mt-3">
+            @if (User.Identity.IsAuthenticated)
+            {
+                <a href="@Url.Action("Checkout", "Order", new { area = "Customer" })" class="btn btn-primary">
+                    Tiến hành thanh toán
+                </a>
+            }
+            else
+            {
+                <a href="@Url.Action("Login", "Account", new { area = "Customer", returnUrl = Url.Action("Checkout", "Order", new { area = "Customer" }) })"
+                   class="btn btn-primary">
+                    Đăng nhập để thanh toán
+                </a>
+            }
+        </div>
+
+
+
     }
 
 </div>

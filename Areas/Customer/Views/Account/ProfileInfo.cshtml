@@ -1,31 +1,63 @@
-﻿
+﻿@model _24DH111577_LTW_BE_16_10.Models.Customer
+
 @{
-    ViewBag.Title = "ProfileInfo";
+    ViewBag.Title = "Profile Information";
     Layout = "~/Areas/Customer/Views/Shared/_CustomerLayout.cshtml";
 }
 
-@* ProfileInfo.cshtml *@
-<div class="card mb-4">
-    <div class="card-header">
-        Thông tin cá nhân
+<div class="container">
+    <h2>Profile Information</h2>
+    <div class="card">
+        <div class="card-body">
+            <div class="row mb-3">
+                <div class="col-md-3">
+                    <strong>Full Name:</strong>
+                </div>
+                <div class="col-md-9">
+                    @Html.DisplayFor(model => model.CustomerName)
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-md-3">
+                    <strong>Phone Number:</strong>
+                </div>
+                <div class="col-md-9">
+                    @Html.DisplayFor(model => model.CustomerPhone)
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-md-3">
+                    <strong>Email:</strong>
+                </div>
+                <div class="col-md-9">
+                    @Html.DisplayFor(model => model.CustomerEmail)
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-md-3">
+                    <strong>Address:</strong>
+                </div>
+                <div class="col-md-9">
+                    @Html.DisplayFor(model => model.CustomerAddress)
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-md-3">
+                    <strong>Username:</strong>
+                </div>
+                <div class="col-md-9">
+                    @Html.DisplayFor(model => model.Username)
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="card-body">
-        <dl class="row">
-            <dt class="col-sm-4">Họ tên:</dt>
-            <dd class="col-sm-8">@Model.CustomerName</dd>
 
-            <dt class="col-sm-4">Số điện thoại:</dt>
-            <dd class="col-sm-8">@Model.CustomerPhone</dd>
-
-            <dt class="col-sm-4">Email:</dt>
-            <dd class="col-sm-8">@Model.CustomerEmail</dd>
-
-            <dt class="col-sm-4">Địa chỉ:</dt>
-            <dd class="col-sm-8">@Model.CustomerAddress</dd>
-
-            <dt class="col-sm-4">Tên đăng nhập:</dt>
-            <dd class="col-sm-8">@Model.Username</dd>
-        </dl>
+    <div class="mt-3">
+        @Html.ActionLink("Edit Profile", "Index", "Account", null, new { @class = "btn btn-primary" })
+        @Html.ActionLink("Back to Home", "Index", "Home", null, new { @class = "btn btn-secondary" })
     </div>
 </div>
-

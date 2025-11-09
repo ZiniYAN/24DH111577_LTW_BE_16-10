@@ -8,8 +8,10 @@ namespace _24DH111577_LTW_BE_16_10.Models.ViewModel
     public class CartService
     {
         private readonly HttpSessionStateBase session;
+
         public CartService(HttpSessionStateBase session)
         {
+
             this.session = session;
         }
         public Cart GetCart()
@@ -18,9 +20,10 @@ namespace _24DH111577_LTW_BE_16_10.Models.ViewModel
             if (cart == null)
             {
                 cart = new Cart();
-                session["Cart"]=cart;
+                session["Cart"] = cart;
             }
             return cart;
+
         }
         public void ClearCart()
         {

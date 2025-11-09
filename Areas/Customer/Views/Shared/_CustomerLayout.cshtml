@@ -31,27 +31,13 @@
                 <div class="cart-container">
                     <a href="/Home/ShoppingCart">
                         <i class="fa-solid fa-cart-shopping" style="color: #19191a;"></i>
-                        <span class="cart-badge" id="cart-count">0</span>
+                        @*<span class="cart-badge" id="cart-count">0</span>*@
                     </a>
                 </div>
             </div>
 
         </section>
-
-        <!-- Navigation bar menu in header -->
-        <div class="container-nav-bar">
-            <nav class="nav-bar-header">
-                <ul class="nav-bar">
-                    <li><a href="/Home/HomePage"><i class="fa-solid fa-house" style="color: black;"></i></a></li>
-                    <li><a href="/Home/KhoaHoc">Khoa Học</a></li>
-                    <li><a href="/Home/TamLyHoc">Tâm Lý Học</a></li>
-                    <li><a href="/Home/VanHoc">Văn Học</a></li>
-                    <li><a href="/Home/KinhTe">Kinh Tế</a></li>
-                    <li><a href="/Home/SelfHelp">Self-help</a></li>
-                </ul>
-            </nav>
-        </div>
-
+ 
     </header>
     @* 2. Body *@
 
@@ -75,7 +61,7 @@
                     <li><a href="/Home/Shipping">Chính sách vận chuyển</a></li>
                 </ul>
             </div>
-            <div class="footer-section" id="footer-section3">
+            @*<div class="footer-section" id="footer-section3">
                 <h3>Danh mục</h3>
                 <ul>
                     <li><a href="/Home/KhoaHoc">Khoa Học</a></li>
@@ -84,7 +70,7 @@
                     <li><a href="/Home/KinhTe">Kinh Tế</a></li>
                     <li><a href="/Home/SelfHelp">Self-help</a></li>
                 </ul>
-            </div>
+            </div>*@
         </div>
         <div class="footer-bottom">
             <p>&copy; 2025 Bookora. Tất cả quyền được bảo lưu.</p>
@@ -92,7 +78,7 @@
     </footer>
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
-    //<script src="~/Scripts/Header.js"></script>
+    @*<script src="~/Scripts/Header.js"></script>*@
     @RenderSection("scripts", required: false)
 </body>
 </html>

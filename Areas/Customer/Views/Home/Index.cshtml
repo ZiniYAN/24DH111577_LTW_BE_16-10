@@ -2,6 +2,7 @@
 @{
     ViewBag.Title = "Customer HomePage";
     <link rel="stylesheet" type="text/css" href="~/Content/CustomerHome.css" />
+    Layout = "~/Areas/Customer/Views/Shared/_CustomerLayout.cshtml";
 }
 
 <section class="container-fluid banner">
@@ -15,17 +16,18 @@
 @*Tim kiem san pham*@
 <section class="container-fluid searchProd">
     <h2>Tìm kiếm sản phẩm</h2>
+    @Html.ActionLink("Profile", "ProfileInfo", "Account")
     @using (Html.BeginForm("Index", "Home", FormMethod.Get))
-            {
-                <div class="form-group search-container">
-                    @Html.TextBoxFor(m => m.SearchTerm, new
-               {
-                   @class= "search-input",
-                   placeholder = "Nhập tên, mô tả hoặc loại sản phẩm"
-               })
-                    <button type="submit" class="search-button">Tìm kiếm</button>
-                </div>
-            }
+    {
+        <div class="form-group search-container">
+            @Html.TextBoxFor(m => m.SearchTerm, new
+       {
+           @class = "search-input",
+           placeholder = "Nhập tên, mô tả hoặc loại sản phẩm"
+       })
+            <button type="submit" class="search-button">Tìm kiếm</button>
+        </div>
+    }
 </section>
 <hr/>
 @Html.Partial("PVFeatureProduct",Model)
