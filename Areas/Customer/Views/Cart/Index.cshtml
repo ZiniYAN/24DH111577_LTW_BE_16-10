@@ -91,7 +91,7 @@
                         <th>Thành tiền</th>
                         <th title="Xóa tất cả mặt hàng trong giỏ">
                             <a href="@Url.Action("ClearCart", "Cart", null)">
-                                <img src="~/Images/remove.png" style="max-height:20px;" />
+                                <img src="~/Content/images/Remove.png" style="max-height:20px;" />
                             </a>
                         </th>
                     </tr>
@@ -115,7 +115,7 @@
                             <td>@item.TotalPrice.ToString("N0")</td>
                             <td>
                                 <a href="@Url.Action("RemoveFromCart", "Cart", new { id = item.ProductID })">
-                                    <img src="~/Images/remove.png" style="max-height:20px;" />
+                                    <img src="~/Content/images/Remove.png" style="max-height:20px;" />
                                 </a>
                             </td>
                         </tr>
@@ -132,12 +132,12 @@
         </div>
 
 
-        @* Nút checkout - đảm bảo area được set đúng *@
+         @*Nút checkout - đảm bảo area được set đúng 
         <div class="text-right mt-3">
             @if (User.Identity.IsAuthenticated)
             {
                 <a href="@Url.Action("Checkout", "Order", new { area = "Customer" })" class="btn btn-primary">
-                    Tiến hành thanh toán
+                    Tiến hành thanh toán    
                 </a>
             }
             else
@@ -147,7 +147,7 @@
                     Đăng nhập để thanh toán
                 </a>
             }
-        </div>
+        </div>*@
 
 
 

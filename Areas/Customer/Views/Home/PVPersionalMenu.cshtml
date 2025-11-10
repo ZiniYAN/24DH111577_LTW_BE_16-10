@@ -1,0 +1,39 @@
+﻿@model _24DH111577_LTW_BE_16_10.Models.ViewModel.PersonalMenuVM
+
+<div style="position:relative;">
+    <a class="fax fa-home"></a>
+
+    @* Hiển thị tên người dùng nếu đã đăng nhập *@
+    @if (ViewBag.pmmodel.IsLoggedIn)
+    {
+        <text>Hello, </text>@ViewBag.pmmodel.Username
+    }
+    else
+    {
+        <text>Xin khoản</text>
+    }
+</div>
+
+<div class="dropdown-content">
+    @if (ViewBag.pmmodel.IsLoggedIn)
+    {
+        @* Menu khi đã đăng nhập *@
+        <a href="@Url.Action("Profile", "Account")">Thông tin tài khoản</a>
+        <a href="@Url.Action("OrderHistory", "Order")">Lịch sử mua hàng</a>
+        <a href="@Url.Action("Logout", "Account")">Đăng xuất</a>
+    }
+    else
+    {
+        @* Menu khi chưa đăng nhập *@
+        <a href="@Url.Action("Register", "Account")">Đăng ký</a>
+        <a href="@Url.Action("Login", "Account")">Đăng nhập</a>
+    }
+</div>
+
+@* Giỏ hàng *@
+<div>
+    <a href="@Url.Action("Index", "Cart")">
+        <i class="fax fa-shopping-cart"></i>
+        <span id="cart-count">@ViewBag.pmmodel.CartCount</span>
+    </a>
+</div>

@@ -226,6 +226,47 @@ namespace _24DH111577_LTW_BE_16_10.Areas.Customer.Controllers
             }
             base.Dispose(disposing);
         }
+        [Authorize]
+        public ActionResult Logout()
+        {
+            try
+            {
+                // 1. Xóa Forms Authentication Cookie
+                FormsAuthentication.SignOut();
+
+                // 2. Xóa Session
+                Session.Clear();
+                Session.Abandon();
+
+                // 3. Xóa Cart nếu có
+                if (Session["Cart"] != null)
+                {
+                    Session["Cart"] = null;
+                }
+
+                // 4. Xóa tất cả cookies
+                if (Request.Cookies[FormsAuthentication.FormsCookieName] != null)
+                {
+                    var cookie = new HttpCookie(FormsAuthentication.FormsCookieName)
+                    {
+                        Expires = DateTime.Now.AddDays(-1)
+                    };
+                    Response.Cookies.Add(cookie);
+                }
+
+                // 5. Thông báo thành công
+                TempData["Message"] = "Đăng xuất thành công!";
+
+                // 6. Chuyển hướng về trang chủ
+                return RedirectToAction("Index", "Home", new { area = "Customer" });
+            }
+            catch (Exception ex)
+            {
+                // Log lỗi nếu cần
+                TempData["Error"] = "Có lỗi xảy ra khi đăng xuất: " + ex.Message;
+                return RedirectToAction("Index", "Home", new { area = "Customer" });
+            }
+        }
 
     }
 }

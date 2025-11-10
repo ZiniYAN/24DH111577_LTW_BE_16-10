@@ -218,6 +218,7 @@
     <Compile Include="Models\ViewModel\CheckoutVM.cs" />
     <Compile Include="Models\ViewModel\HomeProductVM.cs" />
     <Compile Include="Models\ViewModel\LoginVM.cs" />
+    <Compile Include="Models\ViewModel\PersonalMenuVM.cs" />
     <Compile Include="Models\ViewModel\ProductDetailVM.cs" />
     <Compile Include="Models\ViewModel\ProductSearchVM.cs" />
     <Compile Include="Models\ViewModel\RegisterVM.cs" />
@@ -242,6 +243,8 @@
     <Content Include="Content\bootstrap.rtl.min.css" />
     <Content Include="Content\CustomerDetailProduct.css" />
     <Content Include="Content\CustomerHome.css" />
+    <Content Include="Content\images\Logo.png" />
+    <Content Include="Content\images\Remove.png" />
     <Content Include="Content\PagedList.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
@@ -289,7 +292,6 @@
     <Content Include="Areas\Customer\Views\web.config" />
     <Content Include="Areas\Customer\Views\Shared\_CustomerLayout.cshtml" />
     <Content Include="Areas\Customer\Views\Home\Index.cshtml" />
-    <Content Include="Areas\Customer\Views\Home\CategoriesPV.cshtml" />
     <Content Include="Areas\Customer\Views\Account\Register.cshtml" />
     <Content Include="Areas\Customer\Views\Account\Login.cshtml" />
     <Content Include="Areas\Customer\Views\Account\ProfileInfo.cshtml" />
@@ -308,6 +310,8 @@
     <Content Include="Areas\Customer\Views\Order\OrderSuccess.cshtml" />
     <Content Include="Areas\Customer\Views\Order\MyOrder.cshtml" />
     <Content Include="Areas\Customer\Views\Home\PVOrderCard.cshtml" />
+    <Content Include="Areas\Customer\Views\Home\PVCategoryMenu.cshtml" />
+    <Content Include="Areas\Customer\Views\Home\PVPersionalMenu.cshtml" />
     <None Include="Scripts\jquery-3.7.0.intellisense.js" />
     <Content Include="Scripts\jquery-3.7.0.js" />
     <Content Include="Scripts\jquery-3.7.0.min.js" />
@@ -338,7 +342,6 @@
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Data\" />
     <Folder Include="Areas\Customer\Data\" />
-    <Folder Include="Content\images\" />
     <Folder Include="Views\Account\" />
   </ItemGroup>
   <ItemGroup>

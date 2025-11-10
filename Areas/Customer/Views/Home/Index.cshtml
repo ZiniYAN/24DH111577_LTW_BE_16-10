@@ -6,7 +6,7 @@
 }
 
 <section class="container-fluid banner">
-    <div class="banner-container">
+    <div class="banner-container content">
         <h2>Chào mừng bạn đến với web E-Commerce</h2>
         <p>Mua sắm trực tuyến với hàng ngàn sản phẩm chất lượng</p>
         <a href="#" class="btnBanner">Bắt đầu mua sắm</a>
@@ -16,7 +16,6 @@
 @*Tim kiem san pham*@
 <section class="container-fluid searchProd">
     <h2>Tìm kiếm sản phẩm</h2>
-    @Html.ActionLink("Profile", "ProfileInfo", "Account")
     @using (Html.BeginForm("Index", "Home", FormMethod.Get))
     {
         <div class="form-group search-container">

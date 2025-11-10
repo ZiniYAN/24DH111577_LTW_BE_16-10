@@ -1,34 +1,52 @@
-﻿/*Style cho phần BANNER*/
+﻿/* ===========================
+   BANNER SECTION
+   =========================== */
 .banner {
-    background-image: url('../../../images/banner.jpg');
-    background-size: cover;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 300px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 0;
+    margin-bottom: 3rem;
 }
 
 .banner-container {
     text-align: center;
+    padding: 5rem 2rem;
     color: white;
+    max-width: 800px;
+    margin: 0 auto;
 }
 
     .banner-container h2 {
         font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+        line-height: 1.2;
     }
 
     .banner-container p {
-        font-size: 2rem;
+        font-size: 1.2rem;
+        margin-bottom: 2rem;
+        opacity: 0.95;
     }
 
 .btnBanner {
     display: inline-block;
-    padding: 5px 20px;
-    background-color: darkorange;
-    color: white;
+    background: white;
+    color: #667eea;
+    padding: 1rem 2.5rem;
+    border-radius: 50px;
     text-decoration: none;
-    font-weight: bold;
+    font-weight: 600;
+    font-size: 1.05rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
+
+    .btnBanner:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        color: #667eea;
+    }
+
 
 /*Style cho phần SEARCH*/
 .search-container {
