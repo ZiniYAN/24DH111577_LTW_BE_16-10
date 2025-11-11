@@ -23,7 +23,7 @@
 {
     @Html.AntiForgeryToken()
 
-    @* BỎ COMMENT CÁC DÒNG NÀY - QUAN TRỌNG *@
+    //Thêm các dòng này để lấy đc data
     @Html.HiddenFor(m => m.CustomerID)
     @Html.HiddenFor(m => m.Username)
     @Html.HiddenFor(m => m.OrderDate)
@@ -106,4 +106,3 @@
     </div>
 }
 
-@* XÓA ĐOẠN CODE PaymentStatus Ở ĐÂY *@
