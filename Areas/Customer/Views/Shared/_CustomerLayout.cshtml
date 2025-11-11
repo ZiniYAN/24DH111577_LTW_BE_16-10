@@ -92,7 +92,7 @@
             display: none;
             position: absolute;
             right: 0;
-            top: calc(100% + 8px);
+            top: 100%;
             background-color: #ffffff;
             min-width: 220px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.15);
@@ -103,7 +103,7 @@
 
         .site-header__user-menu:hover .site-header__dropdown {
             display: block;
-            animation: fadeInDown 0.3s ease;
+            animation: fadeInDown 1s ease;
         }
 
         .site-header__dropdown a {
@@ -140,9 +140,11 @@
             padding: 10px;
             border-radius: 6px;
             transition: background-color 0.3s ease;
+            text-decoration: none;
         }
 
         .site-header__cart-link:hover {
+            text-decoration: none;
             background-color: #f5f5f5;
         }
 
@@ -262,9 +264,7 @@
         }
     }
 
-    <!-- ========================================
-         HEADER SECTION
-    ========================================= -->
+    @*Header*@
     <header class="site-header">
         <div class="site-header__container">
             <!-- Logo -->
@@ -334,16 +334,12 @@
         </div>
     </header>
 
-    <!-- ========================================
-         MAIN CONTENT AREA
-    ========================================= -->
+    @*Body*@
     <main class="site-content">
         @RenderBody()
     </main>
 
-    <!-- ========================================
-         FOOTER SECTION
-    ========================================= -->
+    @*Footer*@
     <footer class="site-footer">
         <div class="site-footer__content">
             <div class="site-footer__section">
@@ -371,5 +367,13 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- Bootstrap JS -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+    @RenderSection("Scripts", required: false)
 </body>
 </html>

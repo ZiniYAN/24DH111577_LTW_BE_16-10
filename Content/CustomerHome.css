@@ -1,6 +1,17 @@
-﻿/* ===========================
-   BANNER SECTION
-   =========================== */
+﻿/* ==================== GLOBAL ==================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #333;
+    background: #f5f5f5;
+}
+
+/* ==================== BANNER SECTION ==================== */
 .banner {
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     padding: 0;
@@ -47,127 +58,259 @@
         color: #667eea;
     }
 
+/* ==================== SEARCH SECTION ==================== */
+.searchProd {
+    text-align: center;
+    padding: 2rem;
+    background: white;
+    margin: 0 2rem 2rem 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
 
-/*Style cho phần SEARCH*/
+    .searchProd h2 {
+        font-size: 2em;
+        margin-bottom: 20px;
+        color: brown;
+    }
+
 .search-container {
     display: flex;
     justify-content: center;
     align-items: center;
+    max-width: 600px;
+    margin: 0 auto;
 }
 
 .search-input {
-    width: 500px;
-    padding: 10px;
+    flex: 1;
+    max-width: 500px;
+    padding: 12px 15px;
     border: 1px solid #808080;
     border-radius: 5px 0 0 5px;
+    font-size: 14px;
 }
 
 .search-button {
-    padding: 10px 20px;
+    padding: 12px 25px;
     background-color: brown;
+    color: white;
     border: none;
     border-radius: 0 5px 5px 0;
     cursor: pointer;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
 }
 
     .search-button:hover {
         background-color: #555;
     }
 
-.searchProd {
-    text-align: center;
-}
-
-#searchProd h2 {
-    font-size: 2em;
-    margin-bottom: 20px;
-    color: brown;
-}
-
-/*Style của FEATURE PRODUCT*/
+/* ==================== FEATURE PRODUCT (Horizontal Slider) ==================== */
 .featureProd {
-    text-align: left;
+    padding: 2rem;
+    background: white;
+    margin: 0 2rem 2rem 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
 }
 
+    .featureProd h2 {
+        font-size: 2em;
+        margin-bottom: 20px;
+        color: brown;
+        text-align: left;
+        padding-left: 10px;
+        border-left: 4px solid brown;
+    }
+
+/* Container cho FEATURE - Slider ngang */
 .feature-container {
-    /*     justify-content: center;*/
     display: flex;
-    overflow-x: auto; /*cho phép cuộn ngang*/
+    overflow-x: auto;
     scroll-snap-type: x mandatory;
+    gap: 15px;
+    padding: 10px 0;
 }
 
-.fproduct-item { /*hiển thị dạng slider*/
-    width: 160px; /* điều chỉnh theo độ rộng màn hình */
-    max-height: 400px;
-    margin: 10px;
-    gap: 5px; /*khoảng cách giữa 2 item*/
-    border: 1px groove #808080;
+    .feature-container::-webkit-scrollbar {
+        height: 8px;
+    }
+
+    .feature-container::-webkit-scrollbar-track {
+        background: #f1f1f1;
+        border-radius: 10px;
+    }
+
+    .feature-container::-webkit-scrollbar-thumb {
+        background: #888;
+        border-radius: 10px;
+    }
+
+        .feature-container::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+
+/* Feature product card */
+.fproduct-item {
+    flex: 0 0 auto;
+    width: 180px;
+    border: 1px solid #ddd;
     border-radius: 10px;
-    flex: 0 0 auto; /*để các sản phẩm không co giãn*/
-    scroll-snap-align: start; /*để các sản phẩm dừng lại ở đầu khi cuộn*/
+    padding: 10px;
+    background: white;
+    scroll-snap-align: start;
+    transition: all 0.3s ease;
+    cursor: pointer;
 }
+
+    .fproduct-item:hover {
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        transform: translateY(-5px);
+    }
 
     .fproduct-item img {
-        padding: 5px;
-        max-height: 160px;
-        vertical-align: central;
-        background-color: transparent;
+        width: 100%;
+        height: 160px;
+        object-fit: cover;
+        border-radius: 8px;
+        margin-bottom: 10px;
     }
 
-/*Style của LIST PRODUCT */
-.listProduct {
-    text-align: left;
+    .fproduct-item a {
+        text-decoration: none;
+    }
+
+/* ==================== NEW PRODUCT (Grid Layout) ==================== */
+.listProd {
+    padding: 2rem;
+    background: white;
+    margin: 0 2rem 2rem 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
 }
 
+    .listProd h2 {
+        font-size: 2em;
+        margin-bottom: 20px;
+        color: brown;
+        text-align: left;
+        padding-left: 10px;
+        border-left: 4px solid brown;
+    }
+
+/* Container cho NEW - Grid 6 cột */
 .list-container {
-    list-style-type: none;
     display: grid;
-    grid-template-columns: repeat(auto-fit,minmax(100px,1fr));
-    gap: 20px;
-    padding: 0;
-    margin: 0;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 15px;
 }
 
+/* List product card */
 .lproduct-item {
-    max-height: 500px;
-    border: 1px groove #808080;
+    border: 1px solid #ddd;
     border-radius: 10px;
+    padding: 10px;
+    background: white;
+    transition: all 0.3s ease;
+    cursor: pointer;
 }
+
+    .lproduct-item:hover {
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        transform: translateY(-5px);
+    }
 
     .lproduct-item img {
-        padding: 5px;
-        max-height: 120px; /* điều chỉnh theo độ rộng màn hình */
-        background-color: transparent;
+        width: 100%;
+        height: 120px;
+        object-fit: cover;
+        border-radius: 8px;
+        margin-bottom: 10px;
     }
 
-/*các thuộc tính chung của FEATURE và NEW sản phẩm*/
-.featureProd h2, .listProduct h2 {
-    font-size: 2em;
-    margin-bottom: 20px;
-    color: brown;
-    text-align: center;
-}
+    .lproduct-item a {
+        text-decoration: none;
+    }
 
+/* ==================== PRODUCT INFO (Chung) ==================== */
 .prodPrice {
-    font-size: large;
-    color: blue;
-    font-weight: bolder;
-    padding: 10px 5px 0px 5px;
+    font-size: 18px;
+    color: #e74c3c;
+    font-weight: bold;
+    padding: 5px;
+    margin: 5px 0;
 }
 
 .prodName {
-    color: black;
-    font-weight: bold;
-    padding: 0px 5px 0px 5px;
+    color: #333;
+    font-weight: 600;
+    font-size: 14px;
+    padding: 5px;
+    margin: 5px 0;
+    min-height: 40px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    line-height: 1.4;
 }
 
 .prodCate {
-    color: black;
-    padding: 0px 5px 0px 5px;
+    color: #666;
+    font-size: 12px;
+    padding: 5px;
+    margin: 3px 0;
 }
 
 .prodSale {
-    font-size: small;
-    color: dimgrey;
-    padding: 0px 5px 0px 5px;
+    font-size: 12px;
+    color: #999;
+    padding: 5px;
+    margin: 3px 0;
 }
+
+/* ==================== HORIZONTAL LINE ==================== */
+hr {
+    border: none;
+    border-top: 1px solid #ddd;
+    margin: 2rem;
+}
+
+/* ==================== PAGINATION ==================== */
+.pagination-container {
+    text-align: center;
+    padding: 20px;
+}
+
+.pagination {
+    display: inline-block;
+}
+
+    .pagination li {
+        display: inline-block;
+        margin: 0 3px;
+    }
+
+        .pagination li a,
+        .pagination li span {
+            display: inline-block;
+            padding: 8px 14px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            color: #333;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+            .pagination li a:hover {
+                background: brown;
+                color: white;
+                border-color: brown;
+            }
+
+        .pagination li.active span {
+            background: brown;
+            color: white;
+            border-color: brown;
+        }

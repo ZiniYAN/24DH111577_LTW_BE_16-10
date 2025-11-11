@@ -1,0 +1,136 @@
+﻿@model _24DH111577_LTW_BE_16_10.Models.Order
+
+@{
+    ViewBag.Title = "Chi tiết đơn hàng";
+    Layout = "~/Areas/Customer/Views/Shared/_CustomerLayout.cshtml";
+}
+
+<div class="container" style="margin-top:20px;">
+    <div class="clearfix" style="margin-bottom:20px;">
+        <h2 class="pull-left">Chi tiết đơn hàng #@Model.OrderID</h2>
+        <a href="@Url.Action("MyOrder", "Order")" class="btn btn-default pull-right">
+            <i class="glyphicon glyphicon-arrow-left"></i> Quay lại
+        </a>
+    </div>
+
+    @if (TempData["Message"] != null)
+    {
+        <div class="alert alert-success">
+            @TempData["Message"]
+        </div>
+    }
+
+    <!-- Thông tin đơn hàng -->
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h4>Thông tin đơn hàng</h4>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <p><strong>Mã đơn hàng:</strong> #@Model.OrderID</p>
+                    <p><strong>Ngày đặt:</strong> @Model.OrderDate.ToString("dd/MM/yyyy HH:mm")</p>
+                    <p><strong>Trạng thái:</strong> <span class="label label-info">@Model.PaymentStatus</span></p>
+                </div>
+                <div class="col-md-6">
+                    <p><strong>Thanh toán:</strong> @Model.PaymentMethod</p>
+                    <p><strong>Giao hàng:</strong> @Model.DeliveryMethod</p>
+                    <p><strong>Địa chỉ:</strong> @Model.ShippingAddress</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Danh sách sản phẩm -->
+    <div class="panel panel-info">
+        <div class="panel-heading">
+            <h4>Sản phẩm đã đặt</h4>
+        </div>
+        <div class="panel-body">
+            <table class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th>Hình ảnh</th>
+                        <th>Tên sản phẩm</th>
+                        <th class="text-center">Số lượng</th>
+                        <th class="text-right">Đơn giá</th>
+                        <th class="text-right">Thành tiền</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.OrderDetails != null && Model.OrderDetails.Any())
+                    {
+                        foreach (var item in Model.OrderDetails)
+                        {
+                            <tr>
+                                <td class="text-center">
+                                    @if (item.Product != null && !string.IsNullOrEmpty(item.Product.ProductImage))
+                                    {
+                                        <img src="@item.Product.ProductImage" alt="@item.Product.ProductName" style="max-height: 60px; max-width: 60px;" />
+                                    }
+                                    else
+                                    {
+                                        <span>Không có ảnh</span>
+                                    }
+                                </td>
+                                <td>
+                                    @if (item.Product != null)
+                                    {
+                                        @item.Product.ProductName
+                                    }
+                                    else
+                                    {
+                                        <text>Sản phẩm không tồn tại</text>
+                                    }
+                                </td>
+                                <td class="text-center">
+                                    <strong>@item.Quantity</strong>
+                                </td>
+                                <td class="text-right">
+                                    @String.Format("{0:N0}", item.UnitPrice) đ
+                                </td>
+                                <td class="text-right">
+                                    <strong>@String.Format("{0:N0}", item.TotalPrice) đ</strong>
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="5" class="text-center">Không có sản phẩm nào</td>
+                        </tr>
+                    }
+                </tbody>
+                <tfoot>
+                    <tr class="active">
+                        <td colspan="4" class="text-right">
+                            <h4><strong>Tổng cộng:</strong></h4>
+                        </td>
+                        <td class="text-right">
+                            <h4 class="text-danger">
+                                <strong>@String.Format("{0:N0}", Model.TotalAmount) đ</strong>
+                            </h4>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+
+    <!-- Nút hành động -->
+    <div class="text-right">
+        @using (Html.BeginForm("Reorder", "Order", FormMethod.Post, new { style = "display:inline;" }))
+        {
+            @Html.AntiForgeryToken()
+            <input type="hidden" name="id" value="@Model.OrderID" />
+            <button type="submit" class="btn btn-success">
+                <i class="glyphicon glyphicon-shopping-cart"></i> Đặt lại đơn hàng
+            </button>
+        }
+
+        <a href="@Url.Action("MyOrder", "Order")" class="btn btn-default">
+            <i class="glyphicon glyphicon-list"></i> Danh sách đơn hàng
+        </a>
+    </div>
+</div>
