@@ -3,185 +3,8 @@
 @{
     ViewBag.Title = "ProductDetails";
     Layout = "~/Areas/Customer/Views/Shared/_CustomerLayout.cshtml";
+    <link rel="stylesheet" type="text/css" href="~/Content/CustomerDetailProduct.css" />
 }
-
-<style>
-    .product-details {
-        max-width: 1200px;
-        margin: 40px auto;
-        padding: 0 20px;
-    }
-
-    .product-details__container {
-        display: grid;
-        grid-template-columns: 1fr 2fr 1fr;
-        gap: 30px;
-        background: #fff;
-        border-radius: 12px;
-        padding: 30px;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-    }
-
-    /* Image */
-    .product-details__image {
-        text-align: center;
-    }
-
-    .product-details__image img {
-        max-width: 100%;
-        max-height: 350px;
-        border-radius: 8px;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-        transition: transform 0.3s ease;
-    }
-
-    .product-details__image img:hover {
-        transform: scale(1.05);
-    }
-
-    /* Info */
-    .product-details__info {
-        padding: 10px 20px;
-    }
-
-    .product-details__title {
-        font-size: 28px;
-        font-weight: 600;
-        color: #2c3e50;
-        margin-bottom: 15px;
-        line-height: 1.3;
-    }
-
-    .product-details__meta {
-        display: flex;
-        align-items: center;
-        gap: 20px;
-        margin-bottom: 20px;
-        padding-bottom: 15px;
-        border-bottom: 1px solid #e0e0e0;
-    }
-
-    .product-details__sold {
-        color: #7f8c8d;
-        font-size: 14px;
-    }
-
-    .product-details__price {
-        font-size: 32px;
-        font-weight: bold;
-        color: #e74c3c;
-    }
-
-    .product-details__category {
-        background: #ecf0f1;
-        padding: 8px 16px;
-        border-radius: 20px;
-        font-size: 14px;
-        color: #34495e;
-        display: inline-block;
-        margin-bottom: 20px;
-    }
-
-    .product-details__description-title {
-        font-size: 18px;
-        font-weight: 600;
-        color: #2c3e50;
-        margin-bottom: 10px;
-        padding-bottom: 8px;
-        border-bottom: 2px solid #3498db;
-    }
-
-    .product-details__description {
-        line-height: 1.8;
-        color: #555;
-        font-size: 15px;
-    }
-
-    /* Order */
-    .product-details__order {
-        background: #f8f9fa;
-        padding: 25px;
-        border-radius: 12px;
-        border: 1px solid #e0e0e0;
-    }
-
-    .product-details__order-title {
-        font-size: 16px;
-        font-weight: 600;
-        color: #2c3e50;
-        margin-bottom: 15px;
-    }
-
-    .product-details__quantity-group {
-        margin-bottom: 20px;
-    }
-
-    .product-details__quantity-input {
-        width: 100%;
-        padding: 12px;
-        border: 2px solid #ddd;
-        border-radius: 6px;
-        font-size: 16px;
-        transition: border-color 0.3s ease;
-    }
-
-    .product-details__quantity-input:focus {
-        outline: none;
-        border-color: #3498db;
-    }
-
-    .product-details__estimate {
-        background: #fff;
-        padding: 15px;
-        border-radius: 8px;
-        text-align: center;
-        margin-bottom: 20px;
-        border: 2px dashed #3498db;
-    }
-
-    .product-details__estimate-label {
-        font-size: 14px;
-        color: #7f8c8d;
-        margin-bottom: 5px;
-    }
-
-    .product-details__estimate-value {
-        font-size: 24px;
-        font-weight: bold;
-        color: #e74c3c;
-    }
-
-    .product-details__add-to-cart {
-        width: 100%;
-        padding: 14px;
-        background: #3498db;
-        color: white;
-        border: none;
-        border-radius: 8px;
-        font-size: 16px;
-        font-weight: 600;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-    }
-
-    .product-details__add-to-cart:hover {
-        background: #2980b9;
-        transform: translateY(-2px);
-        box-shadow: 0 4px 12px rgba(52, 152, 219, 0.4);
-    }
-
-    .product-details__add-to-cart:active {
-        transform: translateY(0);
-    }
-
-    /* Related Products Section */
-    .product-details__related {
-        margin-top: 50px;
-    }
-
-</style>
 
 <div class="product-details">
     <div class="product-details__container">
@@ -204,7 +27,7 @@
 
             <div style="margin: 20px 0;">
                 <span class="product-details__category">
-                     @Model.product.Category.CategoryName
+                    @Model.product.Category.CategoryName
                 </span>
             </div>
 
@@ -222,15 +45,26 @@
 
                 <div class="product-details__quantity-group">
                     <label class="product-details__order-title">Số lượng</label>
-                    <input type="number"
-                           id="quantityInput"
-                           name="quantity"
-                           value="@Model.quantity"
-                           min="1"
-                           max="999"
-                           class="product-details__quantity-input"
-                           onchange="updateEstimate()"
-                           oninput="updateEstimate()" />
+
+                    <!-- Quantity Selector với nút +/- -->
+                    <div class="quantity-selector">
+                        <button type="button" class="quantity-btn quantity-btn--minus" onclick="decreaseQuantity()">
+                            <i class="fa-solid fa-minus"></i>
+                        </button>
+
+                        <input type="number"
+                               id="quantityInput"
+                               name="quantity"
+                               value="@Model.quantity"
+                               min="1"
+                               max="999"
+                               class="quantity-input"
+                               readonly />
+
+                        <button type="button" class="quantity-btn quantity-btn--plus" onclick="increaseQuantity()">
+                            <i class="fa-solid fa-plus"></i>
+                        </button>
+                    </div>
                 </div>
 
                 <div class="product-details__estimate">
@@ -259,10 +93,47 @@
 </div>
 
 <script>
+    const unitPrice = @Model.product.ProductPrice;
+    const quantityInput = document.getElementById('quantityInput');
+
+    // Khởi tạo giá trị đúng khi load trang
+    window.addEventListener('DOMContentLoaded', function() {
+        // Đảm bảo input có giá trị từ server
+        let initialValue = parseInt(quantityInput.value) || 1;
+        if (initialValue < 1) {
+            initialValue = 1;
+        }
+        quantityInput.value = initialValue;
+        updateEstimate();
+    });
+
+    function increaseQuantity() {
+        let currentValue = parseInt(quantityInput.value) || 1;
+        if (currentValue < 999) {
+            quantityInput.value = currentValue + 1;
+            updateEstimate();
+        }
+    }
+
+    function decreaseQuantity() {
+        let currentValue = parseInt(quantityInput.value) || 1;
+        if (currentValue > 1) {
+            quantityInput.value = currentValue - 1;
+            updateEstimate();
+        }
+    }
+
     function updateEstimate() {
-        var quantity = parseInt(document.getElementById('quantityInput').value) || 1;
-        var unitPrice = @Model.product.ProductPrice;
-        var estimate = quantity * unitPrice;
+        let quantity = parseInt(quantityInput.value) || 1;
+
+        // Đảm bảo quantity tối thiểu là 1
+        if (quantity < 1) {
+            quantity = 1;
+            quantityInput.value = 1;
+        }
+
+        let estimate = quantity * unitPrice;
         document.getElementById('estimateDisplay').innerText = estimate.toLocaleString('vi-VN');
     }
 </script>
+

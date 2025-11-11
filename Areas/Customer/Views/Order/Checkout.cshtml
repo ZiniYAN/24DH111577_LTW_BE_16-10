@@ -23,6 +23,12 @@
 {
     @Html.AntiForgeryToken()
 
+    @* BỎ COMMENT CÁC DÒNG NÀY - QUAN TRỌNG *@
+    @Html.HiddenFor(m => m.CustomerID)
+    @Html.HiddenFor(m => m.Username)
+    @Html.HiddenFor(m => m.OrderDate)
+    @Html.HiddenFor(m => m.TotalPrice)
+
     <h3>Thông tin đơn hàng</h3>
     <div class="form-group">
         <table class="table">
@@ -38,65 +44,66 @@
                 @foreach (var item in Model.CartItems)
                 {
                     <tr>
-                        <td><img src="@item.ProductName" /></td>
+                        <td><img src="@item.ProductImage" style="max-height:60px;" /></td>
                         <td>@item.ProductName</td>
                         <td>@item.Quantity</td>
-                        <td>@item.UnitPrice</td>
-                        <td>@item.TotalPrice</td>
+                        <td>@item.UnitPrice.ToString("N0") đ</td>
+                        <td>@item.TotalPrice.ToString("N0") đ</td>
                     </tr>
                 }
             </tbody>
         </table>
     </div>
+
+    <h3>Thông tin giao hàng</h3>
+    <div class="form-group">
+        @Html.LabelFor(m => m.ShippingAddress, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.ShippingAddress, new { @class = "form-control", @readonly = "readonly", id = "shippingAddress" })
+            @Html.ValidationMessageFor(m => m.ShippingAddress)
+            <button type="button" class="btn btn-link" onclick="enableAddressEdit()">Chỉnh sửa</button>
+        </div>
+    </div>
+
+    <div class="form-group" id="newAddressGroup" style="display:none;">
+        @Html.Label("Địa chỉ mới", new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            <input type="text" id="newShippingAddress" class="form-control" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.Label("Phương thức giao hàng", new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.RadioButtonFor(m => m.DeliveryMethod, "Giao hàng nhanh") Giao hàng nhanh<br>
+            @Html.RadioButtonFor(m => m.DeliveryMethod, "Giao hàng tiết kiệm") Giao hàng tiết kiệm
+            @Html.ValidationMessageFor(m => m.DeliveryMethod)
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.Label("Phương thức thanh toán", new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.RadioButtonFor(m => m.PaymentMethod, "Tiền mặt") Tiền mặt<br>
+            @Html.RadioButtonFor(m => m.PaymentMethod, "Paypal") Paypal<br>
+            @Html.RadioButtonFor(m => m.PaymentMethod, "Mua trước trả sau") Mua trước trả sau
+            @Html.ValidationMessageFor(m => m.PaymentMethod)
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.TotalPrice, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.TotalPrice, new { @class = "form-control", @readonly = "readonly" })
+            @Html.ValidationMessageFor(m => m.TotalPrice)
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Đặt hàng" class="btn btn-default" onclick="updateShippingAddress()" />
+        </div>
+    </div>
 }
 
-<h3>Thông tin giao hàng</h3>
-<div class="form-group">
-    @Html.LabelFor(m => m.ShippingAddress, new { @class = "control-label col-md-2" })
-    <div class="col-md-10">
-        @Html.TextBoxFor(m => m.ShippingAddress, new { @class = "form-control", @readonly = "readonly", id = "shippingAddress" })
-        @Html.ValidationMessageFor(m => m.ShippingAddress)
-        <button type="button" class="btn btn-link" onclick="enableAddressEdit()">Chỉnh sửa</button>
-    </div>
-</div>
-
-<div class="form-group" id="newAddressGroup" style="display:none;">
-    @Html.Label("Địa chỉ mới", new { @class = "control-label col-md-2" })
-    <div class="col-md-10">
-        <input type="text" id="newShippingAddress" class="form-control" />
-    </div>
-</div>
-
-<div class="form-group">
-    @Html.Label("Phương thức giao hàng", new { @class = "control-label col-md-2" })
-    <div class="col-md-10">
-        @Html.RadioButtonFor(m => m.DeliveryMethod, "Giao hàng nhanh") Giao hàng nhanh<br>
-        @Html.RadioButtonFor(m => m.DeliveryMethod, "Giao hàng tiết kiệm") Giao hàng tiết kiệm
-        @Html.ValidationMessageFor(m => m.DeliveryMethod)
-    </div>
-</div>
-
-<div class="form-group">
-    @Html.Label("Phương thức thanh toán", new { @class = "control-label col-md-2" })
-    <div class="col-md-10">
-        @Html.RadioButtonFor(m => m.PaymentMethod, "Tiền mặt") Tiền mặt<br>
-        @Html.RadioButtonFor(m => m.PaymentMethod, "Paypal") Paypal<br>
-        @Html.RadioButtonFor(m => m.PaymentMethod, "Mua trước trả sau") Mua trước trả sau
-        @Html.ValidationMessageFor(m => m.PaymentMethod)
-    </div>
-</div>
-
-<div class="form-group">
-    @Html.LabelFor(m => m.TotalPrice, new { @class = "control-label col-md-2" })
-    <div class="col-md-10">
-        @Html.TextBoxFor(m => m.TotalPrice, new { @class = "form-control", @readonly = "readonly" })
-        @Html.ValidationMessageFor(m => m.TotalPrice)
-    </div>
-</div>
-
-<div class="form-group">
-    <div class="col-md-offset-2 col-md-10">
-        <input type="submit" value="Đặt hàng" class="btn btn-default" onclick="updateShippingAddress()" />
-    </div>
-</div>
-
+@* XÓA ĐOẠN CODE PaymentStatus Ở ĐÂY *@

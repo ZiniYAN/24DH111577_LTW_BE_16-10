@@ -4,97 +4,176 @@
     Layout = "~/Areas/Customer/Views/Shared/_CustomerLayout.cshtml";
 }
 
-<div class="container mt-4">
-    <!-- Search Section -->
-    <div class="card mb-4">
-        <div class="card-body">
-            <h5 class="card-title">Tìm kiếm đơn hàng</h5>
-            @using (Html.BeginForm("MyOrder", "Home", FormMethod.Get))
-            {
-                <div class="row">
-                    <div class="col-md-5">
-                        <div class="form-group">
-                            <input type="text" name="orderCode" class="form-control" placeholder="Nhập mã đơn hàng..." value="@Request.QueryString["orderCode"]" />
-                        </div>
-                    </div>
-                    <div class="col-md-5">
-                        <div class="form-group">
-                            <input type="text" name="productName" class="form-control" placeholder="Nhập tên sản phẩm..." value="@Request.QueryString["productName"]" />
-                        </div>
-                    </div>
-                    <div class="col-md-2">
-                        <button type="submit" class="btn btn-primary w-100">Tìm kiếm</button>
-                    </div>
+<div class="container" style="margin-top:20px;">
+    <!-- Search -->
+    <div class="search-panel">
+        <h4 class="search-title">Tìm kiếm đơn hàng</h4>
+        @using (Html.BeginForm("MyOrder", "Order", FormMethod.Get))
+        {
+            <div class="row">
+                <div class="col-md-5">
+                    <input type="text"
+                           name="orderCode"
+                           class="form-control search-input"
+                           placeholder="Nhập mã đơn hàng..."
+                           value="@Request.QueryString["orderCode"]" />
                 </div>
-            }
-        </div>
+                <div class="col-md-5">
+                    <input type="text"
+                           name="productName"
+                           class="form-control search-input"
+                           placeholder="Nhập tên sản phẩm..."
+                           value="@Request.QueryString["productName"]" />
+                </div>
+                <div class="col-md-2">
+                    <button type="submit" class="btn btn-primary btn-block search-btn">
+                        <i class="glyphicon glyphicon-search"></i> Tìm kiếm
+                    </button>
+                </div>
+            </div>
+        }
     </div>
 
-    <!-- Orders Section -->
-    <div class="card">
-        <div class="card-body">
-            <h5 class="card-title">Đơn hàng của tôi</h5>
-
+    <!-- Orders  -->
+    <div class="orders-panel">
+        <div class="orders-header">
+            <h4>Đơn hàng của tôi</h4>
+        </div>
+        <div class="orders-body">
             <!-- Order Status Tabs -->
-            <ul class="nav nav-tabs" id="orderTabs" role="tablist">
-                <li class="nav-item">
-                    <a class="nav-link active" id="all-tab" data-toggle="tab" href="#all" role="tab">
-                        Tất cả đơn
-                    </a>
+            <ul class="nav nav-tabs order-tabs">
+                <li class="active">
+                    <a href="#all" data-toggle="tab">Tất cả đơn</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" id="pending-tab" data-toggle="tab" href="#pending" role="tab">
-                        Chờ thanh toán
-                    </a>
+                <li>
+                    <a href="#pending" data-toggle="tab">Chờ thanh toán</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" id="processing-tab" data-toggle="tab" href="#processing" role="tab">
-                        Đang xử lý
-                    </a>
+                <li>
+                    <a href="#processing" data-toggle="tab">Đang xử lý</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" id="shipping-tab" data-toggle="tab" href="#shipping" role="tab">
-                        Đang vận chuyển
-                    </a>
+                <li>
+                    <a href="#shipping" data-toggle="tab">Đang vận chuyển</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" id="delivered-tab" data-toggle="tab" href="#delivered" role="tab">
-                        Đã giao
-                    </a>
+                <li>
+                    <a href="#delivered" data-toggle="tab">Đã giao</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" id="cancelled-tab" data-toggle="tab" href="#cancelled" role="tab">
-                        Đã hủy
-                    </a>
+                <li>
+                    <a href="#cancelled" data-toggle="tab">Đã hủy</a>
                 </li>
             </ul>
 
             <!-- Tab Contents -->
-            <div class="tab-content mt-3" id="orderTabContent">
+            <div class="tab-content tab-content-custom">
                 <!-- All Orders Tab -->
-                <div class="tab-pane fade show active" id="all" role="tabpanel">
-                    @foreach (var orderGroup in Model.GroupBy(o => o.PaymentStatus))
+                <div class="tab-pane active" id="all">
+                    @if (Model != null && Model.Any())
                     {
-                        <div class="order-group mb-4">
-                            <h6 class="status-header">@GetStatusName(orderGroup.Key)</h6>
-                            @foreach (var order in orderGroup)
-                            {
-                                @Html.Partial("_OrderCard", order)
-                            }
-                        </div>
+                        foreach (var orderGroup in Model.GroupBy(o => o.PaymentStatus))
+                        {
+                            <div class="order-group">
+                                <h6 class="group-title">@GetStatusName(orderGroup.Key)</h6>
+                                @foreach (var order in orderGroup)
+                                {
+                                    @Html.Partial("PVOrderCard", order)
+                                }
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        <p class="no-orders">Bạn chưa có đơn hàng nào.</p>
                     }
                 </div>
 
-                <!-- Status-specific Tabs -->
-                @foreach (var status in new[] { "Pending", "Processing", "Shipping", "Delivered", "Cancelled" })
-                {
-                    <div class="tab-pane fade" id="@status.ToLower()" role="tabpanel">
-                        @foreach (var order in Model.Where(o => o.PaymentStatus.ToString() == status))
+                <!-- Pending Tab -->
+                <div class="tab-pane" id="pending">
+                    @{
+                        var pendingOrders = Model.Where(o => o.PaymentStatus == "Pending");
+                        if (pendingOrders.Any())
                         {
-                            @Html.Partial("_OrderCard", order)
+                            foreach (var order in pendingOrders)
+                            {
+                                @Html.Partial("PVOrderCard", order)
+                            }
                         }
-                    </div>
-                }
+                        else
+                        {
+                            <p class="no-orders">Không có đơn hàng nào đang chờ thanh toán.</p>
+                        }
+                    }
+                </div>
+
+                <!-- Processing Tab -->
+                <div class="tab-pane" id="processing">
+                    @{
+                        var processingOrders = Model.Where(o => o.PaymentStatus == "Processing");
+                        if (processingOrders.Any())
+                        {
+                            foreach (var order in processingOrders)
+                            {
+                                @Html.Partial("PVOrderCard", order)
+                            }
+                        }
+                        else
+                        {
+                            <p class="no-orders">Không có đơn hàng nào đang xử lý.</p>
+                        }
+                    }
+                </div>
+
+                <!-- Shipping Tab -->
+                <div class="tab-pane" id="shipping">
+                    @{
+                        var shippingOrders = Model.Where(o => o.PaymentStatus == "Shipping");
+                        if (shippingOrders.Any())
+                        {
+                            foreach (var order in shippingOrders)
+                            {
+                                @Html.Partial("PVOrderCard", order)
+                            }
+                        }
+                        else
+                        {
+                            <p class="no-orders">Không có đơn hàng nào đang vận chuyển.</p>
+                        }
+                    }
+                </div>
+
+                <!-- Delivered Tab -->
+                <div class="tab-pane" id="delivered">
+                    @{
+                        var deliveredOrders = Model.Where(o => o.PaymentStatus == "Delivered");
+                        if (deliveredOrders.Any())
+                        {
+                            foreach (var order in deliveredOrders)
+                            {
+                                @Html.Partial("PVOrderCard", order)
+                            }
+                        }
+                        else
+                        {
+                            <p class="no-orders">Không có đơn hàng nào đã giao.</p>
+                        }
+                    }
+                </div>
+
+                <!-- Cancelled Tab -->
+                <div class="tab-pane" id="cancelled">
+                    @{
+                        var cancelledOrders = Model.Where(o => o.PaymentStatus == "Cancelled");
+                        if (cancelledOrders.Any())
+                        {
+                            foreach (var order in cancelledOrders)
+                            {
+                                @Html.Partial("PVOrderCard", order)
+                            }
+                        }
+                        else
+                        {
+                            <p class="no-orders">Không có đơn hàng nào bị hủy.</p>
+                        }
+                    }
+                </div>
             </div>
         </div>
     </div>
@@ -104,27 +183,124 @@
 {
     switch (status)
     {
-        case "Pending":<text>Chờ thanh toán</text>; break;
-    case "Processing": <text>Đang xử lý</text>; break;
-case "Shipping": <text>Đang vận chuyển</text>; break;
-case "Delivered": <text>Đã giao</text>; break;
-case "Cancelled": <text>Đã hủy</text>; break;
+        case "Pending":
+        case "Chờ thanh toán":<text>Chờ thanh toán</text>; break;
+    case "Processing":
+    case "Đang xử lý": <text>Đang xử lý</text>; break;
+case "Shipping":
+case "Đang vận chuyển": <text>Đang vận chuyển</text>; break;
+case "Delivered":
+case "Đã giao": <text>Đã giao</text>; break;
+case "Cancelled":
+case "Đã hủy": <text>Đã hủy</text>; break;
+case "Done":
+case "Hoàn thành": <text>Hoàn thành</text>; break;
 default: <text>@status</text>; break;
 }
 }
 
-@section Styles {
-    <style>
-        .status-header {
-            padding: 10px;
-            background-color: #f8f9fa;
-            border-radius: 5px;
-            margin-bottom: 15px;
-        }
+<style>
+    /* Search Panel */
+    .search-panel {
+        background: #fff;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        padding: 20px;
+        margin-bottom: 20px;
+    }
 
-        .order-group {
-            border-bottom: 1px solid #dee2e6;
-            padding-bottom: 15px;
-        }
-    </style>
-}
+    .search-title {
+        margin: 0 0 15px 0;
+        color: #333;
+        font-size: 18px;
+        font-weight: 600;
+    }
+
+    .search-input {
+        height: 38px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+
+    .search-btn {
+        height: 38px;
+        font-weight: 600;
+    }
+
+    /* Orders Panel */
+    .orders-panel {
+        background: #fff;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        margin-bottom: 20px;
+    }
+
+    .orders-header {
+        background: #f5f5f5;
+        padding: 15px 20px;
+        border-bottom: 1px solid #ddd;
+        border-radius: 4px 4px 0 0;
+    }
+
+    .orders-header h4 {
+        margin: 0;
+        color: #333;
+        font-size: 18px;
+        font-weight: 600;
+    }
+
+    .orders-body {
+        padding: 20px;
+    }
+
+    /* Tabs */
+    .order-tabs {
+        border-bottom: 2px solid #ddd;
+        margin-bottom: 20px;
+    }
+
+    .order-tabs > li > a {
+        color: #555;
+        font-weight: 500;
+        font-size: 14px;
+        padding: 10px 15px;
+        text-decoration: none;
+    }
+
+    .order-tabs > li.active > a,
+    .order-tabs > li.active > a:hover,
+    .order-tabs > li.active > a:focus {
+        color: #337ab7;
+        border-bottom: 2px solid #337ab7;
+        background: #fff;
+    }
+
+    /* Tab Content */
+    .tab-content-custom {
+        min-height: 300px;
+    }
+
+    /* Order Group */
+    .order-group {
+        margin-bottom: 25px;
+    }
+
+    .group-title {
+        background: #f8f9fa;
+        padding: 10px 15px;
+        margin: 0 0 15px 0;
+        border-radius: 4px;
+        border-left: 4px solid #337ab7;
+        font-size: 15px;
+        font-weight: 600;
+        color: #333;
+    }
+
+    /* No orders message */
+    .no-orders {
+        text-align: center;
+        padding: 40px 20px;
+        color: #999;
+        font-size: 15px;
+    }
+</style>

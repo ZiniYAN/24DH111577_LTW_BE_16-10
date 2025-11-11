@@ -54,14 +54,27 @@ namespace _24DH111577_LTW_BE_16_10.Areas.Customer.Controllers
             //Phan trang
             int pageNumber = page ?? 1;
             int pageSize = model.PageSize;
-            model.product = pro;
-            model.RelatedProduct = products.OrderBy(p => p.ProductID).Take(8).ToList(); // đỏi từ ToPageList(pageNumber, pageSize) -> 
-            model.TopProducts = products.OrderByDescending(p => p.OrderDetails.Count()).Take(8).ToPagedList(pageNumber, pageSize);
+            // Set quantity với giá trị mặc định là 1
+            int productQuantity = quantity ?? 1;
 
-            if (quantity.HasValue)
+            // Đảm bảo quantity luôn >= 1
+            if (productQuantity < 1)
             {
-                model.quantity = quantity.Value;
+                productQuantity = 1;
             }
+            model.product = pro;
+            model.quantity = productQuantity;  // Dùng productQuantity, không phải quantity.Value
+            model.estimatedValue = pro.ProductPrice * productQuantity; // Tính giá tạm tính
+            model.RelatedProduct = products.OrderBy(p => p.ProductID).Take(8).ToList(); // đỏi từ ToPageList(pageNumber, pageSize) -> 
+            model.TopProducts = products
+                .OrderByDescending(p => p.OrderDetails.Count())
+                .Take(8)
+                .ToPagedList(pageNumber, pageSize);
+
+            //if (quantity.HasValue)
+            //{
+            //    model.quantity = quantity.Value;
+            //}
             return View(model);
         }
 

@@ -1,0 +1,257 @@
+﻿@model _24DH111577_LTW_BE_16_10.Models.Order
+
+<div class="order-card-stacked">
+    <!-- Header -->
+    <div class="order-header-stacked">
+        <div>
+            <h5>Đơn hàng #@Model.OrderID</h5>
+            <small><i class="glyphicon glyphicon-calendar"></i> @Model.OrderDate.ToString("dd/MM/yyyy HH:mm")</small>
+        </div>
+        <div>
+            @GetStatusBadge(Model.PaymentStatus)
+        </div>
+    </div>
+
+    <div class="order-body-stacked">
+        <!-- DÒNG 1: Sản phẩm -->
+        <div class="products-section-stacked">
+            <strong class="section-label">Sản phẩm:</strong>
+            <div class="products-list-stacked">
+                @if (Model.OrderDetails != null && Model.OrderDetails.Any())
+                {
+                    foreach (var item in Model.OrderDetails)
+                    {
+                        if (item.Product != null)
+                        {
+                            <div class="product-row-stacked">
+                                <img src="@item.Product.ProductImage" alt="@item.Product.ProductName" />
+                                <span class="product-name-stacked">@item.Product.ProductName</span>
+                                <span class="product-qty-stacked">x @item.Quantity</span>
+                            </div>
+                        }
+                    }
+                }
+            </div>
+        </div>
+
+        <!-- DÒNG 2: Tổng tiền -->
+        <div class="total-section-stacked">
+            <span class="total-label">Tổng tiền:</span>
+            <span class="total-amount">@String.Format("{0:N0}", Model.TotalAmount) đ</span>
+        </div>
+
+        <!-- DÒNG 3: 2 Buttons ngang -->
+        <div class="buttons-section-stacked">
+            <a href="@Url.Action("OrderDetail", "Order", new { id = Model.OrderID })"
+               class="btn btn-info btn-half">
+                <i class="glyphicon glyphicon-eye-open"></i> Xem chi tiết
+            </a>
+
+            @using (Html.BeginForm("Reorder", "Order", FormMethod.Post, new { style = "display:inline-block; width:49%; margin:0;" }))
+            {
+                @Html.AntiForgeryToken()
+                <input type="hidden" name="id" value="@Model.OrderID" />
+                <button type="submit" class="btn btn-success btn-half">
+                    <i class="glyphicon glyphicon-shopping-cart"></i> Mua lại
+                </button>
+            }
+        </div>
+    </div>
+</div>
+
+@helper GetStatusBadge(string status)
+{
+    string badgeClass = "";
+    string statusText = "";
+
+    switch (status)
+    {
+        case "Pending":
+        case "Chờ thanh toán":
+            badgeClass = "label-warning";
+            statusText = "Chờ thanh toán";
+            break;
+        case "Processing":
+        case "Đang xử lý":
+            badgeClass = "label-info";
+            statusText = "Đang xử lý";
+            break;
+        case "Shipping":
+        case "Đang vận chuyển":
+            badgeClass = "label-primary";
+            statusText = "Đang vận chuyển";
+            break;
+        case "Delivered":
+        case "Đã giao":
+            badgeClass = "label-success";
+            statusText = "Đã giao";
+            break;
+        case "Cancelled":
+        case "Đã hủy":
+            badgeClass = "label-danger";
+            statusText = "Đã hủy";
+            break;
+        case "Done":
+        case "Hoàn thành":
+            badgeClass = "label-success";
+            statusText = "Hoàn thành";
+            break;
+        default:
+            badgeClass = "label-default";
+            statusText = status;
+            break;
+    }
+
+    <span class="label @badgeClass">@statusText</span>
+}
+
+<style>
+    /* Card container */
+    .order-card-stacked {
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        margin-bottom: 15px;
+        background: #fff;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+
+    .order-card-stacked:hover {
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    /* Header */
+    .order-header-stacked {
+        background: #f5f5f5;
+        padding: 12px 15px;
+        border-bottom: 1px solid #ddd;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .order-header-stacked h5 {
+        margin: 0 0 3px 0;
+        font-size: 16px;
+        font-weight: 600;
+        color: #333;
+    }
+
+    .order-header-stacked small {
+        font-size: 12px;
+        color: #666;
+    }
+
+    .order-header-stacked small i {
+        margin-right: 3px;
+    }
+
+    /* Body */
+    .order-body-stacked {
+        padding: 15px;
+    }
+
+    /* DÒNG 1: Products section */
+    .products-section-stacked {
+        margin-bottom: 15px;
+        padding-bottom: 15px;
+        border-bottom: 1px dashed #e0e0e0;
+    }
+
+    .section-label {
+        display: block;
+        margin-bottom: 10px;
+        font-size: 14px;
+        font-weight: 600;
+        color: #333;
+    }
+
+    .products-list-stacked {
+        background: #f9f9f9;
+        padding: 10px;
+        border-radius: 4px;
+        border: 1px solid #e8e8e8;
+    }
+
+    .product-row-stacked {
+        display: flex;
+        align-items: center;
+        padding: 8px;
+        margin-bottom: 8px;
+        background: #fff;
+        border-radius: 3px;
+        border: 1px solid #e0e0e0;
+    }
+
+    .product-row-stacked:last-child {
+        margin-bottom: 0;
+    }
+
+    .product-row-stacked img {
+        width: 60px;
+        height: 60px;
+        object-fit: cover;
+        border-radius: 3px;
+        margin-right: 12px;
+        border: 1px solid #ddd;
+    }
+
+    .product-name-stacked {
+        flex: 1;
+        font-size: 14px;
+        color: #333;
+    }
+
+    .product-qty-stacked {
+        background: #5bc0de;
+        color: white;
+        padding: 4px 10px;
+        border-radius: 3px;
+        font-size: 12px;
+        font-weight: bold;
+        white-space: nowrap;
+    }
+
+    /* DÒNG 2: Total section */
+    .total-section-stacked {
+        margin-bottom: 15px;
+        padding-bottom: 15px;
+        border-bottom: 1px dashed #e0e0e0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .total-label {
+        font-size: 15px;
+        font-weight: 600;
+        color: #333;
+    }
+
+    .total-amount {
+        font-size: 18px;
+        font-weight: bold;
+        color: #d9534f;
+    }
+
+    /* DÒNG 3: Buttons section - 2 nút ngang */
+    .buttons-section-stacked {
+        display: flex;
+        gap: 2%;
+        justify-content: space-between;
+    }
+
+    .btn-half {
+        width: 49%;
+        padding: 10px;
+        font-size: 13px;
+        font-weight: 600;
+        text-align: center;
+        transition: all 0.2s ease;
+    }
+
+    .btn-half:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+    }
+
+</style>
